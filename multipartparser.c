@@ -89,14 +89,16 @@ static const char header_field_chars[256] = {
     'x',    'y',    'z',    0,      '|',     0,     '~',    0
 };
 
-void multipartparser_init(multipartparser* parser, const char* boundary)
+int multipartparser_init(multipartparser* parser, const char* boundary)
 {
     memset(parser, 0, sizeof(*parser));
 
-    strncpy(parser->boundary, boundary, sizeof(parser->boundary));
+    strncpy(parser->boundary, boundary, sizeof(parser->boundary) - 1);
+    parser->boundary[sizeof(parser->boundary) - 1] = 0;
     parser->boundary_length = strlen(parser->boundary);
 
     parser->state = s_preamble;
+    return strlen(boundary) == strlen(parser->boundary);
 }
 
 void multipartparser_callbacks_init(multipartparser_callbacks* callbacks)

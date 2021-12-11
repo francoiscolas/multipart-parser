@@ -16,7 +16,7 @@ typedef int (*multipart_data_cb) (multipartparser*, const char* data, size_t siz
 
 struct multipartparser {
     /** PRIVATE **/
-    char        boundary[70];
+    char        boundary[71];
     int         boundary_length;
     int         index;
     uint16_t    state;
@@ -36,7 +36,7 @@ struct multipartparser_callbacks {
     multipart_cb      on_body_end;
 };
 
-void multipartparser_init(multipartparser* parser, const char* boundary);
+int multipartparser_init(multipartparser* parser, const char* boundary);
 
 void multipartparser_callbacks_init(multipartparser_callbacks* callbacks);
 
